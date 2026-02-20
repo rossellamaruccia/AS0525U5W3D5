@@ -13,7 +13,5 @@ public record EventDTO(
         @NotBlank
         String location,
         @NotNull
-        int availability,
-        @NotNull
-        Long organizer_id) {
+        int availability) {
 }

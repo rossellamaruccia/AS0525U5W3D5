@@ -20,8 +20,8 @@ public class EventService {
         this.userService = userService;
     }
 
-    public Event createEvent(EventDTO payload) {
-        User organizer = this.userService.findById(payload.organizer_id());
+    public Event createEvent(EventDTO payload, long user_id) {
+        User organizer = this.userService.findById(user_id);
         if (organizer.getRole() != Role.ORGANIZER) {
             throw new UnauthorizedException("You shall not pass.");
         } else
