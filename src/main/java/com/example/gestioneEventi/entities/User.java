@@ -18,7 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private long id;
-    private String nomeCompleto;
+    private String fullname;
     private Role role;
     @Getter(AccessLevel.NONE)
     private String password;
