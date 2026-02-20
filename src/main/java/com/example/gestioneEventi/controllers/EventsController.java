@@ -2,9 +2,11 @@ package com.example.gestioneEventi.controllers;
 
 import com.example.gestioneEventi.entities.Event;
 import com.example.gestioneEventi.entities.User;
+import com.example.gestioneEventi.exceptions.BadRequestException;
 import com.example.gestioneEventi.exceptions.NotFoundException;
 import com.example.gestioneEventi.exceptions.ValidationException;
 import com.example.gestioneEventi.payloads.EventDTO;
+import com.example.gestioneEventi.payloads.ParticipationDTO;
 import com.example.gestioneEventi.services.EventService;
 import com.example.gestioneEventi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +45,16 @@ public class EventsController {
             } else
                 return this.eventService.createEvent(payload, user_id);
         } else throw new NotFoundException("User not found");
+    }
+
+    @PostMapping("/participate")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void participate(@RequestBody @Validated ParticipationDTO payload, BindingResult validationResult) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof User) {
+            Long user_id = ((User) principal).getId();
+            this.eventService.getReservation(user_id, payload);
+            System.out.println("You will soon get your ticket via email!");
+        } else throw new BadRequestException("Something went wrong!");
     }
 }
