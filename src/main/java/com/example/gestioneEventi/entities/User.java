@@ -2,7 +2,6 @@ package com.example.gestioneEventi.entities;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +11,6 @@ import java.util.Set;
 @Table(name = "users")
 @Getter
 @Setter
-@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +27,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "event_id")
     )
     private Set<Event> events;
+
+    public User(String fullname, Role role, String password) {
+        this.fullname = fullname;
+        this.role = role;
+        this.password = password;
+    }
 }

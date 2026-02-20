@@ -2,7 +2,6 @@ package com.example.gestioneEventi.entities;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,6 @@ import java.util.Set;
 @Table(name = "events")
 @Getter
 @Setter
-@AllArgsConstructor
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +27,12 @@ public class Event {
     private User organizer;
     @ManyToMany(mappedBy = "events")
     private Set<User> users;
+
+    public Event(String title, LocalDate date, String location, int availability, User organizer) {
+        this.title = title;
+        this.date = date;
+        this.location = location;
+        this.availability = availability;
+        this.organizer = organizer;
+    }
 }
