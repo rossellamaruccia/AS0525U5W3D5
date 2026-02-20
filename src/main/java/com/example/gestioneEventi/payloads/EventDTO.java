@@ -1,6 +1,5 @@
 package com.example.gestioneEventi.payloads;
 
-import com.example.gestioneEventi.entities.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -16,5 +15,5 @@ public record EventDTO(
         @NotNull
         int availability,
         @NotNull
-        User organizer) {
+        Long organizer_id) {
 }

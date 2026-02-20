@@ -26,7 +26,10 @@ public class Event {
     @ManyToOne
     private User organizer;
     @ManyToMany(mappedBy = "events")
-    private Set<User> users;
+    private Set<User> participants;
+
+    public Event() {
+    }
 
     public Event(String title, LocalDate date, String location, int availability, User organizer) {
         this.title = title;

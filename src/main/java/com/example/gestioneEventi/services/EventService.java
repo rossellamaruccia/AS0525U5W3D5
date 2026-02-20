@@ -1,7 +1,9 @@
 package com.example.gestioneEventi.services;
 
 import com.example.gestioneEventi.entities.Event;
-import com.example.gestioneEventi.exceptions.BadRequestException;
+import com.example.gestioneEventi.entities.Role;
+import com.example.gestioneEventi.entities.User;
+import com.example.gestioneEventi.exceptions.UnauthorizedException;
 import com.example.gestioneEventi.payloads.EventDTO;
 import com.example.gestioneEventi.repositories.EventsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +12,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class EventService {
     private EventsRepository eventsRepository;
+    private UserService userService;
 
     @Autowired
-    public EventService(EventsRepository eventsRepository) {
+    public EventService(EventsRepository eventsRepository, UserService userService) {
         this.eventsRepository = eventsRepository;
+        this.userService = userService;
     }
 
-    public void save(EventDTO payload) {
-        if (this.eventsRepository.findByTitle(payload.title()).isPresent())
-            throw new BadRequestException("This event already exists");
-        else
-            this.eventsRepository.save(new Event(payload.title(), payload.date(), payload.location(), payload.availability(), payload.organizer()));
+    public Event createEvent(EventDTO payload) {
+        User organizer = this.userService.findById(payload.organizer_id());
+        if (organizer.getRole() != Role.ORGANIZER) {
+            throw new UnauthorizedException("You shall not pass.");
+        } else
+            return eventsRepository.save(new Event(payload.title(), payload.date(), payload.location(), payload.availability(), organizer));
     }
 }

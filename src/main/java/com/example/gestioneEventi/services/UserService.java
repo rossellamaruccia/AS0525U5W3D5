@@ -26,12 +26,12 @@ public class UserService {
         if (this.usersRepository.findByFullname(payload.fullname()).isPresent())
             throw new BadRequestException("This user already exists");
         else
-            return this.usersRepository.save(new User(payload.fullname(), bcrypt.encode(payload.password())));
+            return this.usersRepository.save(new User(payload.fullname(), payload.role(), bcrypt.encode(payload.password())));
     }
 
     public User findById(long id) {
         Optional<User> optional = this.usersRepository.findById(id);
-        if (optional.isPresent()) return optional.get();
+        if (optional.isPresent()) return (User) optional.get();
         else throw new NotFoundException(id);
     }
 
