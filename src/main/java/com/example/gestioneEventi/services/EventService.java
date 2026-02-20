@@ -5,7 +5,9 @@ import com.example.gestioneEventi.exceptions.BadRequestException;
 import com.example.gestioneEventi.payloads.EventDTO;
 import com.example.gestioneEventi.repositories.EventsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EventService {
     private EventsRepository eventsRepository;
 

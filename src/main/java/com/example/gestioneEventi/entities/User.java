@@ -34,9 +34,12 @@ public class User implements UserDetails {
     )
     private Set<Event> events;
 
-    public User(String fullname, Role role, String password) {
+    public User() {
+    }
+
+    public User(String fullname, String password) {
         this.fullname = fullname;
-        this.role = role;
+        this.role = Role.BASIC;
         this.password = password;
     }
 

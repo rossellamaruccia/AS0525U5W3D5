@@ -4,4 +4,8 @@ public class NotFoundException extends RuntimeException {
     public NotFoundException(long id) {
         super("User with the id: " + id + "got lost. You got into a sideQuest");
     }
+
+    public NotFoundException(String message) {
+        super(message);
+    }
 }
